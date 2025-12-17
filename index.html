@@ -3,10 +3,879 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Portal Test</title>
+    <title>Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter Tight', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .top-bar {
+            height: 45px;
+            background-color: #474f56;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 30px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            z-index: 500;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .menu-item:hover {
+            opacity: 0.8;
+        }
+
+        .menu-item span {
+            white-space: nowrap;
+        }
+
+        .menu-icon {
+            height: 18px;
+            width: 18px;
+            flex-shrink: 0;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-item span {
+                display: none;
+            }
+            .menu {
+                gap: 20px;
+            }
+
+            .menu-item {
+                position: relative;
+            }
+
+            .menu-item .tooltip {
+                 display: block;
+            }
+
+        }
+
+        .secondary-bar {
+            height: 65px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+            box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.22);
+            -webkit-box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.22);
+            -moz-box-shadow: 0px 7px 9px -4px rgba(0,0,0,0.22);
+            position: relative;
+            z-index: 10;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid #474f56;
+            border-radius: 6px;
+            background-color: white;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .filter-icon {
+            height: 16px;
+            width: 16px;
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 150px;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 14px;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        select, input[type="date"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        select {
+            appearance: none;
+            padding-right: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            padding-left: 36px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .select-text {
+            color: #999;
+            user-select: none;
+        }
+
+        select:focus + .select-text {
+            color: #333;
+        }
+
+        select option:first-child {
+            color: #999;
+        }
+
+        select option:not(:first-child) {
+            color: #333;
+        }
+
+        input[type="date"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            padding-left: 36px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        .date-text {
+            user-select: none;
+        }
+
+        .content {
+            position: relative;
+            height: calc(100vh - 110px);
+            overflow: hidden;
+            z-index:1;
+        }
+
+        .map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .map-base {
+            background-image: url('/images/maptemplate.png');
+        }
+
+        .map-numbers {
+            background-image: url('/images/desknumbers.png');
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .map-numbers.visible {
+            opacity: 1;
+        }
+
+        .dots-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .desk-dot {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: #e54d42;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .desk-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .desk-dot.selected {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #333333, 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .selection-box {
+            position: absolute;
+            border: 2px dashed #00c18d;
+            background-color: rgba(0, 193, 141, 0.1);
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .side-panel {
+            position: absolute;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background-color: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 200;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .side-panel.open {
+            right: 0;
+        }
+
+        .side-panel.white-theme {
+            border-left: 4px solid #474f56;
+        }
+
+        .side-panel.green-theme {
+            border-left: 4px solid #00c18d;
+        }
+
+        .panel-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .panel-close:hover {
+            opacity: 1;
+        }
+
+        .panel-close::before,
+        .panel-close::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background-color: #333;
+        }
+
+        .panel-close::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .panel-close::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        .panel-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .panel-content {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .map-widgets {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .widget {
+            background-color: white;
+            border: 4px solid white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .widget-dual {
+            width: 42px;
+            height: 84px;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .widget-half {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 5px;
+        }
+
+        .widget-half:hover {
+            background-color: #f5f5f5;
+        }
+
+        .widget-half:hover .tooltip {
+            opacity: 1;
+        }
+
+        .widget-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .widget-color {
+            width: 42px;
+            height: 115px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .color-segment {
+            cursor: pointer;
+            position: relative;
+            transition: opacity 0.2s;
+        }
+
+        .color-segment:hover {
+            filter: brightness(1.1);
+        }
+
+        .color-red {
+            background-color: #e54d42;
+            flex: 2;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .color-yellow {
+            background-color: #ffab10;
+            flex: 3;
+        }
+
+        .color-green {
+            background-color: #00c18d;
+            flex: 2.5;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* Tooltip Styles */
+        .tooltip {
+            position: absolute;
+            background-color: #09131b;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 5000;
+        }
+
+        *:hover > .tooltip {
+            opacity: 1;
+            transition: opacity 0.3s 1s;
+        }
+
+        .tooltip-right {
+            left: calc(100% + 5px);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tooltip-left {
+            right: calc(100% + 5px);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tooltip-up {
+            bottom: calc(100% + 5px);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tooltip-down {
+            top: calc(100% + 5px);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
 </head>
 <body>
-hello world
+    <div class="top-bar">
+        <img src="/images/fslogosmallwhite.png" alt="Logo" class="logo">
+        <nav class="menu">
+            <a href="#" class="menu-item">
+                <img src="/images/mapicon.png" alt="" class="menu-icon">
+                <span>Floorplans</span>
+                    <div class="tooltip tooltip-down">Floorplans</div>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/personicon.png" alt="" class="menu-icon">
+                <span>Users</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/lockericon.png" alt="" class="menu-icon">
+                <span>Lockers</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/clockicon.png" alt="" class="menu-icon">
+                <span>Reservations</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/groupsicon.png" alt="" class="menu-icon">
+                <span>Groups</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/analyticsicon.png" alt="" class="menu-icon">
+                <span>Analytics</span>
+            </a>
+            <a href="#" class="menu-item">
+                <img src="/images/settingsicon.png" alt="" class="menu-icon">
+                <span>Settings</span>
+            </a>
+            <img src="/images/avatar.png" alt="Avatar" class="avatar">
+        </nav>
+    </div>
+    
+    <div class="secondary-bar">
+        <div class="filter-item">
+            <img src="/images/searchicon.png" alt="" class="filter-icon">
+            <input type="text" class="search-input" placeholder="Search People or Spaces">
+        </div>
+        
+        <div class="filter-item">
+            <img src="/images/locationicon.png" alt="" class="filter-icon">
+            <select id="building-select">
+                <option value="" disabled selected hidden>Select Building</option>
+                <option value="north">North Tower</option>
+                <option value="south">South Tower</option>
+                <option value="east">East Building</option>
+                <option value="west">West Campus</option>
+            </select>
+            <span class="select-text">Select Building</span>
+        </div>
+        
+        <div class="filter-item">
+            <img src="/images/updownicon.png" alt="" class="filter-icon">
+            <select id="floor-select">
+                <option value="" disabled selected hidden>Select Floor</option>
+                <option value="1">Floor 1</option>
+                <option value="2">Floor 2</option>
+                <option value="3">Floor 3</option>
+                <option value="4">Floor 4</option>
+                <option value="5">Floor 5</option>
+            </select>
+            <span class="select-text">Select Floor</span>
+        </div>
+        
+        <div class="filter-item" onclick="document.getElementById('date-select').showPicker()">
+            <img src="/images/calendarsimpleicon.png" alt="" class="filter-icon">
+            <span class="date-text">Dec 17, 2025</span>
+            <input type="date" id="date-select" value="2025-12-17">
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="map-container">
+            <div class="map-layer map-base"></div>
+            <div class="map-layer map-numbers" id="deskNumbers"></div>
+            <div class="dots-layer" id="dotsLayer"></div>
+        </div>
+
+        <div class="map-widgets">
+            <div class="widget widget-color">
+                <div class="color-segment color-red" id="selectConfirmed">
+                    <div class="tooltip tooltip-right">Select Confirmed Desks</div>
+                </div>
+                <div class="color-segment color-yellow" id="selectReserved">
+                    <div class="tooltip tooltip-right">Select Reserved Desks</div>
+                </div>
+                <div class="color-segment color-green" id="selectFree">
+                    <div class="tooltip tooltip-right">Select Free Desks</div>
+                </div>
+            </div>
+            
+            <div class="widget widget-dual">
+                <div class="widget-half" id="toggleNumbers">
+                    <img src="/images/mapstackicon.png" alt="" class="widget-icon">
+                    <div class="tooltip tooltip-right">Show Desk Numbers</div>
+                </div>
+                <div class="widget-half" id="invertSelection">
+                    <img src="/images/selectinverseicon.png" alt="" class="widget-icon">
+                    <div class="tooltip tooltip-right">Invert Selection</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-panel" id="sidePanel">
+            <div class="panel-close" id="panelClose"></div>
+            <div class="panel-title" id="panelTitle">Desk Selected</div>
+            <div class="panel-content" id="panelContent">
+                <p>Click on a desk to view details.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle desk numbers visibility
+        document.getElementById('toggleNumbers').addEventListener('click', function() {
+            const numbersLayer = document.getElementById('deskNumbers');
+            numbersLayer.classList.toggle('visible');
+        });
+
+        // Define desk positions - coordinates are percentages of the map (1202 x 695)
+        // Format: { x: percentage, y: percentage, status: 'confirmed'|'reserved'|'free' }
+        const deskPositions = [
+            // Row 1: Y = 23px (3.31%) - 12 desks
+            { x: 9.48, y: 3.31, status: 'free' },      // X: 114px
+            { x: 15.81, y: 3.31, status: 'free' },     // X: 190px
+            { x: 22.13, y: 3.31, status: 'free' },     // X: 266px
+            { x: 28.45, y: 3.31, status: 'reserved' }, // X: 342px
+            { x: 34.78, y: 3.31, status: 'reserved' }, // X: 418px
+            { x: 46.26, y: 3.31, status: 'confirmed' },// X: 556px
+            { x: 52.58, y: 3.31, status: 'confirmed' },// X: 632px
+            { x: 58.90, y: 3.31, status: 'confirmed' },// X: 708px
+            { x: 65.22, y: 3.31, status: 'confirmed' },// X: 784px
+            { x: 71.55, y: 3.31, status: 'reserved' }, // X: 860px
+            { x: 77.87, y: 3.31, status: 'reserved' }, // X: 936px
+            { x: 84.19, y: 3.31, status: 'free' },     // X: 1012px
+            
+            // Add more rows of desks below as you identify their positions
+        ];
+
+        // Create desk dots at fixed positions
+        const dotsLayer = document.getElementById('dotsLayer');
+        const dots = [];
+        const statusColors = {
+            'confirmed': '#e54d42',
+            'reserved': '#ffab10',
+            'free': '#00c18d'
+        };
+        
+        deskPositions.forEach((desk, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'desk-dot';
+            dot.style.backgroundColor = statusColors[desk.status];
+            dot.style.left = desk.x + '%';
+            dot.style.top = desk.y + '%';
+            dot.dataset.status = desk.status;
+            dot.dataset.id = i;
+            dotsLayer.appendChild(dot);
+            dots.push(dot);
+        });
+
+        // Invert selection
+        document.getElementById('invertSelection').addEventListener('click', function() {
+            const currentlySelected = new Set(selectedDots);
+            selectedDots = dots.filter(dot => !currentlySelected.has(dot));
+            updateSelection();
+            if (selectedDots.length > 0) {
+                showPanel('green');
+            } else {
+                sidePanel.classList.remove('open');
+            }
+        });
+
+        // Color widget click handlers
+        document.getElementById('selectConfirmed').addEventListener('click', function(e) {
+            const confirmedDots = dots.filter(dot => dot.dataset.status === 'confirmed');
+            if (e.shiftKey) {
+                // Add to existing selection
+                confirmedDots.forEach(dot => {
+                    if (!selectedDots.includes(dot)) {
+                        selectedDots.push(dot);
+                    }
+                });
+            } else {
+                // Replace selection
+                selectedDots = confirmedDots;
+            }
+            updateSelection();
+            showPanel(selectedDots.length === 1 ? 'white' : 'green');
+        });
+        
+        document.getElementById('selectReserved').addEventListener('click', function(e) {
+            const reservedDots = dots.filter(dot => dot.dataset.status === 'reserved');
+            if (e.shiftKey) {
+                // Add to existing selection
+                reservedDots.forEach(dot => {
+                    if (!selectedDots.includes(dot)) {
+                        selectedDots.push(dot);
+                    }
+                });
+            } else {
+                // Replace selection
+                selectedDots = reservedDots;
+            }
+            updateSelection();
+            showPanel(selectedDots.length === 1 ? 'white' : 'green');
+        });
+        
+        document.getElementById('selectFree').addEventListener('click', function(e) {
+            const freeDots = dots.filter(dot => dot.dataset.status === 'free');
+            if (e.shiftKey) {
+                // Add to existing selection
+                freeDots.forEach(dot => {
+                    if (!selectedDots.includes(dot)) {
+                        selectedDots.push(dot);
+                    }
+                });
+            } else {
+                // Replace selection
+                selectedDots = freeDots;
+            }
+            updateSelection();
+            showPanel(selectedDots.length === 1 ? 'white' : 'green');
+        });
+
+        // Selection logic
+        const sidePanel = document.getElementById('sidePanel');
+        const panelTitle = document.getElementById('panelTitle');
+        const panelContent = document.getElementById('panelContent');
+        const panelClose = document.getElementById('panelClose');
+        let selectedDots = [];
+        let isSelecting = false;
+        let isAdditive = false;
+        let selectionBox = null;
+        let startX, startY;
+
+        // Single click on dot
+        dots.forEach(dot => {
+            dot.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (!isSelecting) {
+                    if (e.shiftKey) {
+                        // Shift-click: add/remove from selection
+                        const index = selectedDots.indexOf(dot);
+                        if (index > -1) {
+                            selectedDots.splice(index, 1);
+                        } else {
+                            selectedDots.push(dot);
+                        }
+                        updateSelection();
+                        if (selectedDots.length > 0) {
+                            showPanel(selectedDots.length === 1 ? 'white' : 'green');
+                        } else {
+                            sidePanel.classList.remove('open');
+                        }
+                    } else {
+                        // Regular click: select only this dot
+                        selectedDots = [dot];
+                        updateSelection();
+                        showPanel('white');
+                    }
+                }
+            });
+        });
+
+        // Click and drag selection
+        const content = document.querySelector('.content');
+        
+        dotsLayer.addEventListener('mousedown', function(e) {
+            if (e.target.classList.contains('desk-dot')) return;
+            
+            isSelecting = true;
+            isAdditive = e.shiftKey;
+            const contentRect = content.getBoundingClientRect();
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            selectionBox = document.createElement('div');
+            selectionBox.className = 'selection-box';
+            selectionBox.style.left = (startX - contentRect.left) + 'px';
+            selectionBox.style.top = (startY - contentRect.top) + 'px';
+            content.appendChild(selectionBox);
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isSelecting) return;
+            
+            const contentRect = content.getBoundingClientRect();
+            const currentX = e.clientX;
+            const currentY = e.clientY;
+            const width = Math.abs(currentX - startX);
+            const height = Math.abs(currentY - startY);
+            const left = Math.min(startX, currentX) - contentRect.left;
+            const top = Math.min(startY, currentY) - contentRect.top;
+            
+            selectionBox.style.left = left + 'px';
+            selectionBox.style.top = top + 'px';
+            selectionBox.style.width = width + 'px';
+            selectionBox.style.height = height + 'px';
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            if (!isSelecting) return;
+            
+            isSelecting = false;
+            
+            // Check which dots are in the selection box
+            const boxRect = selectionBox.getBoundingClientRect();
+            const newSelection = [];
+            
+            dots.forEach(dot => {
+                const dotRect = dot.getBoundingClientRect();
+                if (
+                    dotRect.left < boxRect.right &&
+                    dotRect.right > boxRect.left &&
+                    dotRect.top < boxRect.bottom &&
+                    dotRect.bottom > boxRect.top
+                ) {
+                    newSelection.push(dot);
+                }
+            });
+            
+            if (selectionBox) {
+                selectionBox.remove();
+                selectionBox = null;
+            }
+            
+            // If Shift was held, add to existing selection instead of replacing
+            if (isAdditive && newSelection.length > 0) {
+                newSelection.forEach(dot => {
+                    if (!selectedDots.includes(dot)) {
+                        selectedDots.push(dot);
+                    }
+                });
+            } else if (newSelection.length > 0) {
+                selectedDots = newSelection;
+            } else if (!isAdditive) {
+                // Only deselect all if not holding Shift and clicking empty space
+                selectedDots = [];
+            }
+            
+            if (selectedDots.length > 0) {
+                updateSelection();
+                showPanel(selectedDots.length === 1 ? 'white' : 'green');
+            } else {
+                dots.forEach(dot => dot.classList.remove('selected'));
+                sidePanel.classList.remove('open');
+            }
+            
+            isAdditive = false;
+        });
+
+        function updateSelection() {
+            dots.forEach(dot => dot.classList.remove('selected'));
+            selectedDots.forEach(dot => dot.classList.add('selected'));
+        }
+
+        function showPanel(theme) {
+            sidePanel.className = 'side-panel open ' + theme + '-theme';
+            
+            if (theme === 'white') {
+                panelTitle.textContent = 'Desk Selected';
+                panelContent.innerHTML = '<p>Single desk selected. Details would appear here.</p>';
+            } else {
+                panelTitle.textContent = selectedDots.length + ' Desks Selected';
+                panelContent.innerHTML = '<p>Multiple desks selected. Bulk actions would appear here.</p>';
+            }
+        }
+
+        panelClose.addEventListener('click', function() {
+            sidePanel.classList.remove('open');
+            selectedDots.forEach(dot => dot.classList.remove('selected'));
+            selectedDots = [];
+        });
+
+        // Update select dropdowns
+        document.getElementById('building-select').addEventListener('change', function() {
+            this.previousElementSibling.nextElementSibling.textContent = this.options[this.selectedIndex].text;
+        });
+
+        document.getElementById('floor-select').addEventListener('change', function() {
+            this.previousElementSibling.nextElementSibling.textContent = this.options[this.selectedIndex].text;
+        });
+
+        document.getElementById('date-select').addEventListener('change', function() {
+            const date = new Date(this.value);
+            const formatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            this.previousElementSibling.textContent = formatted;
+        });
+    </script>
 </body>
 </html>
