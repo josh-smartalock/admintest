@@ -215,31 +215,41 @@
             overflow: hidden;
             z-index:1;
         }
+        
+        .content.space-pressed {
+            cursor: grab;
+        }
+        
+        .content.panning {
+            cursor: grabbing;
+        }
 
         .map-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: relative;
+            width: 1202px;
+            height: 695px;
+            margin: 0;
+            transform-origin: 0 0;
+            transition: transform 0.1s ease-out;
         }
 
         .map-layer {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
+            width: 1202px;
+            height: 695px;
+            background-size: contain;
+            background-position: top left;
+            background-repeat: no-repeat;
         }
 
         .map-base {
-            background-image: url('/admintest/images/maptemplate.png');
+            background-image: url('images/maptemplate.png');
         }
 
         .map-numbers {
-            background-image: url('/admintest/images/desknumbers.png');
+            background-image: url('images/desknumbers.png');
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -252,14 +262,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 1202px;
+            height: 695px;
         }
 
         .desk-dot {
             position: absolute;
-            width: 25px;
-            height: 25px;
+            width: 23px;
+            height: 23px;
             background-color: #e54d42;
             border-radius: 50%;
             cursor: pointer;
@@ -271,8 +281,8 @@
         }
 
         .desk-dot.selected {
-            transform: scale(1.2);
-            box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #333333, 0 2px 8px rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #333333, 0 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .selection-box {
@@ -283,30 +293,31 @@
             z-index: 100;
         }
 
-        .side-panel {
+.side-panel {
             position: absolute;
-            top: 0;
-            right: -400px;
+            top: 20px;
+            right: -420px;
             width: 400px;
-            height: 100%;
+            height: calc(100% - 40px);
             background-color: white;
-            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             transition: right 0.3s ease;
             z-index: 200;
             padding: 30px;
             overflow-y: auto;
+            border-radius: 12px;
         }
 
         .side-panel.open {
-            right: 0;
+            right: 20px;
         }
 
         .side-panel.white-theme {
-            border-left: 4px solid #474f56;
+            border: 4px solid #474f56;
         }
 
         .side-panel.green-theme {
-            border-left: 4px solid #00c18d;
+            border: 4px solid #00c18d;
         }
 
         .panel-close {
@@ -348,6 +359,43 @@
             font-weight: 600;
             margin-bottom: 20px;
             color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-count {
+            font-size: 16px;
+            font-weight: 400;
+            color: #e54d42;
+        }
+
+        .panel-field {
+            margin-bottom: 20px;
+        }
+
+        .panel-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .panel-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 14px;
+            color: #333;
+            background-color: white;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .panel-select:focus {
+            border-color: #00c18d;
         }
 
         .panel-content {
@@ -357,12 +405,13 @@
         }
 
         .map-widgets {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             left: 30px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            z-index: 300;
         }
 
         .widget {
@@ -423,18 +472,18 @@
 
         .color-red {
             background-color: #e54d42;
-            flex: 2;
+            flex: 3;
             border-radius: 5px 5px 0 0;
         }
 
         .color-yellow {
             background-color: #ffab10;
-            flex: 3;
+            flex: 2;
         }
 
         .color-green {
             background-color: #00c18d;
-            flex: 2.5;
+            flex: 2.8;
             border-radius: 0 0 5px 5px;
         }
 
@@ -486,49 +535,49 @@
 </head>
 <body>
     <div class="top-bar">
-        <img src="/admintest/images/fslogosmallwhite.png" alt="Logo" class="logo">
+        <img src="images/fslogosmallwhite.png" alt="Logo" class="logo">
         <nav class="menu">
             <a href="#" class="menu-item">
-                <img src="/admintest/images/mapicon.png" alt="" class="menu-icon">
+                <img src="images/mapicon.png" alt="" class="menu-icon">
                 <span>Floorplans</span>
                     <div class="tooltip tooltip-down">Floorplans</div>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/personicon.png" alt="" class="menu-icon">
+                <img src="images/personicon.png" alt="" class="menu-icon">
                 <span>Users</span>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/lockericon.png" alt="" class="menu-icon">
+                <img src="images/lockericon.png" alt="" class="menu-icon">
                 <span>Lockers</span>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/clockicon.png" alt="" class="menu-icon">
+                <img src="images/clockicon.png" alt="" class="menu-icon">
                 <span>Reservations</span>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/groupsicon.png" alt="" class="menu-icon">
+                <img src="images/groupsicon.png" alt="" class="menu-icon">
                 <span>Groups</span>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/analyticsicon.png" alt="" class="menu-icon">
+                <img src="images/analyticsicon.png" alt="" class="menu-icon">
                 <span>Analytics</span>
             </a>
             <a href="#" class="menu-item">
-                <img src="/admintest/images/settingsicon.png" alt="" class="menu-icon">
+                <img src="images/settingsicon.png" alt="" class="menu-icon">
                 <span>Settings</span>
             </a>
-            <img src="/admintest/images/avatar.png" alt="Avatar" class="avatar">
+            <img src="images/avatar.png" alt="Avatar" class="avatar">
         </nav>
     </div>
     
     <div class="secondary-bar">
         <div class="filter-item">
-            <img src="/admintest/images/searchicon.png" alt="" class="filter-icon">
+            <img src="images/searchicon.png" alt="" class="filter-icon">
             <input type="text" class="search-input" placeholder="Search People or Spaces">
         </div>
         
         <div class="filter-item">
-            <img src="/admintest/images/locationicon.png" alt="" class="filter-icon">
+            <img src="images/locationicon.png" alt="" class="filter-icon">
             <select id="building-select">
                 <option value="" disabled selected hidden>Select Building</option>
                 <option value="north">North Tower</option>
@@ -540,7 +589,7 @@
         </div>
         
         <div class="filter-item">
-            <img src="/admintest/images/updownicon.png" alt="" class="filter-icon">
+            <img src="images/updownicon.png" alt="" class="filter-icon">
             <select id="floor-select">
                 <option value="" disabled selected hidden>Select Floor</option>
                 <option value="1">Floor 1</option>
@@ -553,14 +602,14 @@
         </div>
         
         <div class="filter-item" onclick="document.getElementById('date-select').showPicker()">
-            <img src="/admintest/images/calendarsimpleicon.png" alt="" class="filter-icon">
+            <img src="images/calendarsimpleicon.png" alt="" class="filter-icon">
             <span class="date-text">Dec 17, 2025</span>
             <input type="date" id="date-select" value="2025-12-17">
         </div>
     </div>
     
-    <div class="content">
-        <div class="map-container">
+    <div class="content" id="content">
+        <div class="map-container" id="mapContainer">
             <div class="map-layer map-base"></div>
             <div class="map-layer map-numbers" id="deskNumbers"></div>
             <div class="dots-layer" id="dotsLayer"></div>
@@ -581,18 +630,17 @@
             
             <div class="widget widget-dual">
                 <div class="widget-half" id="toggleNumbers">
-                    <img src="/admintest/images/mapstackicon.png" alt="" class="widget-icon">
+                    <img src="images/mapstackicon.png" alt="" class="widget-icon">
                     <div class="tooltip tooltip-right">Show Desk Numbers</div>
                 </div>
                 <div class="widget-half" id="invertSelection">
-                    <img src="/admintest/images/selectinverseicon.png" alt="" class="widget-icon">
+                    <img src="images/selectinverseicon.png" alt="" class="widget-icon">
                     <div class="tooltip tooltip-right">Invert Selection</div>
                 </div>
             </div>
         </div>
 
         <div class="side-panel" id="sidePanel">
-            <div class="panel-close" id="panelClose"></div>
             <div class="panel-title" id="panelTitle">Desk Selected</div>
             <div class="panel-content" id="panelContent">
                 <p>Click on a desk to view details.</p>
@@ -601,6 +649,87 @@
     </div>
 
     <script>
+        // Zoom and Pan State
+        let scale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isPanning = false;
+        let panStartX = 0;
+        let panStartY = 0;
+        let spacePressed = false;
+        const mapContainer = document.getElementById('mapContainer');
+        const content = document.getElementById('content');
+        
+        // Space key handling for pan mode
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'Space' && !spacePressed) {
+                spacePressed = true;
+                content.classList.add('space-pressed');
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('keyup', function(e) {
+            if (e.code === 'Space') {
+                spacePressed = false;
+                content.classList.remove('space-pressed');
+                if (isPanning) {
+                    isPanning = false;
+                    content.classList.remove('panning');
+                }
+            }
+        });
+        
+        // Pan on space + drag
+        content.addEventListener('mousedown', function(e) {
+            if (spacePressed) {
+                isPanning = true;
+                panStartX = e.clientX - translateX;
+                panStartY = e.clientY - translateY;
+                content.classList.add('panning');
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (isPanning && spacePressed) {
+                translateX = e.clientX - panStartX;
+                translateY = e.clientY - panStartY;
+                updateTransform();
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mouseup', function(e) {
+            if (isPanning) {
+                isPanning = false;
+                content.classList.remove('panning');
+            }
+        });
+        
+        // Zoom with mouse wheel
+        content.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            
+            const rect = content.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const oldScale = scale;
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            scale = Math.min(Math.max(0.5, scale * delta), 3);
+            
+            // Adjust translation to zoom toward mouse position
+            translateX = mouseX - (mouseX - translateX) * (scale / oldScale);
+            translateY = mouseY - (mouseY - translateY) * (scale / oldScale);
+            
+            updateTransform();
+        }, { passive: false });
+        
+        function updateTransform() {
+            mapContainer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+        
         // Toggle desk numbers visibility
         document.getElementById('toggleNumbers').addEventListener('click', function() {
             const numbersLayer = document.getElementById('deskNumbers');
@@ -610,22 +739,118 @@
         // Define desk positions - coordinates are percentages of the map (1202 x 695)
         // Format: { x: percentage, y: percentage, status: 'confirmed'|'reserved'|'free' }
         const deskPositions = [
-            // Row 1: Y = 23px (3.31%) - 12 desks
-            { x: 9.48, y: 3.31, status: 'free' },      // X: 114px
-            { x: 15.81, y: 3.31, status: 'free' },     // X: 190px
-            { x: 22.13, y: 3.31, status: 'free' },     // X: 266px
-            { x: 28.45, y: 3.31, status: 'reserved' }, // X: 342px
-            { x: 34.78, y: 3.31, status: 'reserved' }, // X: 418px
-            { x: 46.26, y: 3.31, status: 'confirmed' },// X: 556px
-            { x: 52.58, y: 3.31, status: 'confirmed' },// X: 632px
-            { x: 58.90, y: 3.31, status: 'confirmed' },// X: 708px
-            { x: 65.22, y: 3.31, status: 'confirmed' },// X: 784px
-            { x: 71.55, y: 3.31, status: 'reserved' }, // X: 860px
-            { x: 77.87, y: 3.31, status: 'reserved' }, // X: 936px
-            { x: 84.19, y: 3.31, status: 'free' },     // X: 1012px
+
+        //top islands
+
+    { x: 8.5, y: 1.5, status: 'free' },      
+    { x: 14.75, y: 1.5, status: 'confirmed' },     
+    { x: 21, y: 1.5, status: 'free' },    
+    { x: 27.5, y: 1.5, status: 'reserved' }, 
+    { x: 34, y: 1.5, status: 'reserved' }, 
+    { x: 45.2, y: 1.5, status: 'confirmed' },
+    { x: 51.45, y: 1.5, status: 'confirmed' },
+    { x: 57.85, y: 1.5, status: 'confirmed' },
+    { x: 64.25, y: 1.5, status: 'confirmed' },
+    { x: 70.65, y: 1.5, status: 'confirmed' }, 
+    { x: 77.05, y: 1.5, status: 'reserved' }, 
+    { x: 83.45, y: 1.5, status: 'free' },    
+    
+        //2nd row
+
+    { x: 8.5, y: 6.65, status: 'free' },      
+    { x: 14.75, y: 6.65, status: 'free' },     
+    { x: 21, y: 6.65, status: 'free' },    
+    { x: 27.5, y: 6.65, status: 'confirmed' }, 
+    { x: 34, y: 6.65, status: 'free' }, 
+    { x: 45.2, y: 6.65, status: 'free' },
+    { x: 51.45, y: 6.65, status: 'reserved' },
+    { x: 57.85, y: 6.65, status: 'confirmed' },
+    { x: 64.25, y: 6.65, status: 'confirmed' },
+    { x: 70.65, y: 6.65, status: 'reserved' }, 
+    { x: 77.05, y: 6.65, status: 'confirmed' }, 
+    { x: 83.45, y: 6.65, status: 'free' }, 
+
+        //small island
+
+    { x: 14.75, y: 23.5, status: 'free' },     
+    { x: 21, y: 23.5, status: 'confirmed' },    
+    { x: 14.75, y: 28.6, status: 'reserved' },     
+    { x: 21, y: 28.6, status: 'confirmed' },   
+ 
+            //island 3
             
-            // Add more rows of desks below as you identify their positions
-        ];
+    { x: 8.5, y: 45.7, status: 'free' },  
+    { x: 14.75, y: 45.7, status: 'free' },     
+    { x: 21, y: 45.7, status: 'confirmed' },       
+    { x: 27.5, y: 45.7, status: 'confirmed' },   
+    { x: 34, y: 45.7, status: 'free' },  
+
+    { x: 8.5, y: 50.7, status: 'confirmed' },  
+    { x: 14.75, y: 50.7, status: 'confirmed' },     
+    { x: 21, y: 50.7, status: 'confirmed' },      
+    { x: 27.5, y: 50.7, status: 'reserved' },   
+    { x: 34, y: 50.7, status: 'free' },  
+
+    //little island 1
+            
+    { x: 8.5, y: 67.8, status: 'free' },  
+    { x: 14.75, y: 67.8, status: 'reserved' },     
+    { x: 21, y: 67.8, status: 'confirmed' },
+
+    { x: 8.5, y: 72.85, status: 'confirmed' },  
+    { x: 14.75, y: 72.85, status: 'reserved' },     
+    { x: 21, y: 72.85, status: 'free' },
+
+    //little island 2
+
+    { x: 29.5, y: 67.8, status: 'free' },  
+    { x: 36, y: 67.8, status: 'reserved' },  
+
+    { x: 29.5, y: 72.85, status: 'confirmed' },  
+    { x: 36, y: 72.85, status: 'confirmed' }, 
+    
+    //little island 3
+
+    { x: 49.2, y: 67.8, status: 'free' },  
+    { x: 49.2, y: 72.85, status: 'confirmed' },  
+
+    //little island 4
+
+    { x: 57.2, y: 67.8, status: 'free' },  
+    { x: 63.6, y: 67.8, status: 'confirmed' },  
+    { x: 70, y: 67.8, status: 'confirmed' },  
+
+    { x: 57.2, y: 72.85, status: 'confirmed' },  
+    { x: 63.6, y: 72.85, status: 'confirmed' },  
+    { x: 70, y: 72.85, status: 'reserved' },  
+
+        //bottom island
+
+    { x: 7, y: 89.8, status: 'free' },
+    { x: 13.4, y: 89.8, status: 'reserved' },
+    { x: 19.7, y: 89.8, status: 'confirmed' },
+    { x: 26.1, y: 89.8, status: 'confirmed' },
+    { x: 32.5, y: 89.8, status: 'reserved' },
+    { x: 38.9, y: 89.8, status: 'confirmed' },
+    { x: 45.3, y: 89.8, status: 'free' },
+    { x: 51.6, y: 89.8, status: 'free' },
+    { x: 58, y: 89.8, status: 'confirmed' },
+    { x: 64.37, y: 89.8, status: 'reserved' },
+    { x: 70.7, y: 89.8, status: 'free' },
+
+    { x: 7, y: 94.9, status: 'reserved' },
+    { x: 13.4, y: 94.9, status: 'reserved' },
+    { x: 19.7, y: 94.9, status: 'confirmed' },
+    { x: 26.1, y: 94.9, status: 'free' },
+    { x: 32.5, y: 94.9, status: 'reserved' },
+    { x: 38.9, y: 94.9, status: 'confirmed' },
+    { x: 45.3, y: 94.9, status: 'confirmed' },
+    { x: 51.6, y: 94.9, status: 'reserved' },
+    { x: 58, y: 94.9, status: 'free' },
+    { x: 64.37, y: 94.9, status: 'confirmed' },
+    { x: 70.7, y: 94.9, status: 'free' },
+
+];
 
         // Create desk dots at fixed positions
         const dotsLayer = document.getElementById('dotsLayer');
@@ -727,7 +952,7 @@
         dots.forEach(dot => {
             dot.addEventListener('click', function(e) {
                 e.stopPropagation();
-                if (!isSelecting) {
+                if (!isSelecting && !isPanning) {
                     if (e.shiftKey) {
                         // Shift-click: add/remove from selection
                         const index = selectedDots.indexOf(dot);
@@ -753,10 +978,8 @@
         });
 
         // Click and drag selection
-        const content = document.querySelector('.content');
-        
         dotsLayer.addEventListener('mousedown', function(e) {
-            if (e.target.classList.contains('desk-dot')) return;
+            if (e.target.classList.contains('desk-dot') || spacePressed) return;
             
             isSelecting = true;
             isAdditive = e.shiftKey;
@@ -844,23 +1067,47 @@
             selectedDots.forEach(dot => dot.classList.add('selected'));
         }
 
-        function showPanel(theme) {
-            sidePanel.className = 'side-panel open ' + theme + '-theme';
-            
-            if (theme === 'white') {
-                panelTitle.textContent = 'Desk Selected';
-                panelContent.innerHTML = '<p>Single desk selected. Details would appear here.</p>';
-            } else {
-                panelTitle.textContent = selectedDots.length + ' Desks Selected';
-                panelContent.innerHTML = '<p>Multiple desks selected. Bulk actions would appear here.</p>';
-            }
-        }
+function showPanel(theme) {
+    sidePanel.className = 'side-panel open ' + theme + '-theme';
+    
+    if (theme === 'white') {
+        panelTitle.innerHTML = 'Desk Selected';
+        panelContent.innerHTML = '<p>Single desk selected. Details would appear here.</p>';
+    } else {
+        panelTitle.innerHTML = 'Bulk Edit Desks<span class="panel-count">Selected Desks: ' + selectedDots.length + '</span>';
+        panelContent.innerHTML = `
+            <div class="panel-field">
+                <div class="panel-label">Desk Type</div>
+                <select class="panel-select">
+                    <option value="">Select Type</option>
+                    <option value="standard">Standard</option>
+                    <option value="standing">Standing</option>
+                    <option value="executive">Executive</option>
+                </select>
+            </div>
+            <div class="panel-field">
+                <div class="panel-label">Desk Group</div>
+                <select class="panel-select">
+                    <option value="">Select Group</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="sales">Sales</option>
+                    <option value="marketing">Marketing</option>
+                </select>
+            </div>
+            <div class="panel-field">
+                <div class="panel-label">Desk Zone</div>
+                <select class="panel-select">
+                    <option value="">Select Zone</option>
+                    <option value="quiet">Quiet Zone</option>
+                    <option value="collaborative">Collaborative Zone</option>
+                    <option value="window">Window Zone</option>
+                </select>
+            </div>
+        `;
+    }
+}
 
-        panelClose.addEventListener('click', function() {
-            sidePanel.classList.remove('open');
-            selectedDots.forEach(dot => dot.classList.remove('selected'));
-            selectedDots = [];
-        });
+
 
         // Update select dropdowns
         document.getElementById('building-select').addEventListener('change', function() {
