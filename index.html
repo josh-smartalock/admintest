@@ -118,6 +118,27 @@
             position: relative;
         }
 
+        .filter-item select {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Inter Tight', sans-serif;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            width: 100%;
+            appearance: none;
+            padding-right: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            padding-left: 36px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
         .filter-icon {
             height: 16px;
             width: 16px;
@@ -293,69 +314,30 @@
             z-index: 100;
         }
 
-.side-panel {
-            position: absolute;
-            top: 20px;
-            right: -420px;
-            width: 400px;
-            height: calc(100% - 40px);
-            background-color: white;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: right 0.3s ease;
-            z-index: 200;
-            padding: 30px;
-            overflow-y: auto;
-            border-radius: 12px;
-        }
+    .side-panel {
+        position: absolute;
+        top: 20px;
+        right: -420px;
+        width: 400px;
+        height: calc(100% - 40px);
+        background-color: white;
+        box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.2);
+        transition: right 0.3s ease;
+        z-index: 11000;
+        padding: 30px;
+        overflow-y: auto;
+        border-radius: 12px;
+        border: 1px solid #afafaf;
+    }
 
         .side-panel.open {
             right: 20px;
         }
 
-        .side-panel.white-theme {
-            border: 4px solid #474f56;
-        }
 
-        .side-panel.green-theme {
-            border: 4px solid #00c18d;
-        }
-
-        .panel-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-
-        .panel-close:hover {
-            opacity: 1;
-        }
-
-        .panel-close::before,
-        .panel-close::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 2px;
-            background-color: #333;
-        }
-
-        .panel-close::before {
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-
-        .panel-close::after {
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
 
         .panel-title {
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 20px;
             color: #333;
@@ -364,10 +346,15 @@
             align-items: center;
         }
 
+        .panel-title img {
+            width: 20px;
+            height: 20px;
+        }
+
         .panel-count {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 400;
-            color: #e54d42;
+            color: #999;
         }
 
         .panel-field {
@@ -392,6 +379,14 @@
             background-color: white;
             cursor: pointer;
             outline: none;
+            appearance: auto;
+            opacity: 1;
+            position: relative;
+        }
+
+        .panel-select option {
+            color: #333;
+            background-color: white;
         }
 
         .panel-select:focus {
@@ -403,6 +398,142 @@
             color: #666;
             line-height: 1.6;
         }
+
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(128, 128, 128, 0.2);
+            margin: 20px 0;
+        }
+
+        .panel-field-inline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+       .three-state-button {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            width: fit-content;
+        }
+        .state-btn {
+            padding: 6px 16px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            border-right: 1px solid #ddd;
+            transition: all 0.2s;
+        }
+        .state-btn:last-child {
+            border-right: none;
+        }
+        .state-btn:hover:not(.active) {
+            background: #f5f5f5;
+        }
+        .state-btn.active.state-on {
+            background: #00c18d;
+            color: white;
+        }
+        .state-btn.active.state-off {
+            background: #e54d42;
+            color: white;
+        }
+        .state-btn.active:not(.state-on):not(.state-off) {
+            background: #999;
+            color: white;
+        }
+        .two-state-button {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+            width: fit-content;
+        }
+
+        .clear-all {
+            color: #e54d42;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .clear-all:hover {
+            text-decoration: underline;
+        }
+
+        .deskaction-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px; 
+        }
+
+        .deskaction {
+            display: flex;
+            min-width: 20px; 
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid #474f56;
+            border-radius: 6px;
+            background: white;
+            min-height: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 45%;
+        }
+
+        .deskaction img {
+            width: 20px;
+            height: 20px;
+            margin-right:8px;
+        }
+
+        .deskaction:hover {
+            background-color: #f5f5f5;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            background: white;
+            min-height: 40px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: #E0F2FA;
+            color: #2b3136;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .tag-close {
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .tag-close:hover {
+            opacity: 1;
+        }
+
+
+        /* MAP WIDGETS */
 
         .map-widgets {
             position: fixed;
@@ -421,15 +552,15 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .widget-dual {
+        .widget-tri {
             width: 42px;
-            height: 84px;
+            height: 126px;
             display: flex;
             flex-direction: column;
             gap: 1px;
         }
 
-        .widget-half {
+        .widget-third {
             position: relative;
             flex: 1;
             display: flex;
@@ -440,11 +571,11 @@
             border-radius: 5px;
         }
 
-        .widget-half:hover {
+        .widget-third:hover {
             background-color: #f5f5f5;
         }
 
-        .widget-half:hover .tooltip {
+        .widget-third:hover .tooltip {
             opacity: 1;
         }
 
@@ -615,6 +746,8 @@
             <div class="dots-layer" id="dotsLayer"></div>
         </div>
 
+
+
         <div class="map-widgets">
             <div class="widget widget-color">
                 <div class="color-segment color-red" id="selectConfirmed">
@@ -628,24 +761,165 @@
                 </div>
             </div>
             
-            <div class="widget widget-dual">
-                <div class="widget-half" id="toggleNumbers">
+            <div class="widget widget-tri">
+                <div class="widget-third" id="toggleNumbers">
                     <img src="images/mapstackicon.png" alt="" class="widget-icon">
                     <div class="tooltip tooltip-right">Show Desk Numbers</div>
                 </div>
-                <div class="widget-half" id="invertSelection">
+                <div class="widget-third" id="invertSelection">
                     <img src="images/selectinverseicon.png" alt="" class="widget-icon">
                     <div class="tooltip tooltip-right">Invert Selection</div>
+                </div>
+                <div class="widget-third" id="clearSelection">
+                    <img src="images/clearselectionicon.png" alt="" class="widget-icon">
+                    <div class="tooltip tooltip-right">Clear Selection</div>
                 </div>
             </div>
         </div>
 
         <div class="side-panel" id="sidePanel">
-            <div class="panel-title" id="panelTitle">Desk Selected</div>
-            <div class="panel-content" id="panelContent">
-                <p>Click on a desk to view details.</p>
+
+    <div class="panel-title" id="panelTitle"></div>
+    <div class="panel-content" id="panelContent">
+        <!-- Single desk content -->
+        <div id="singleDeskContent" style="display: none;">
+            <div class="panel-field">
+                    <div class="panel-label">Desk Type</div>
+                    <select class="panel-select">
+                        <option value="">Select Type</option>
+                        <option value="standard">Standard</option>
+                        <option value="standing">Standing</option>
+                        <option value="executive">Executive</option>
+                    </select>   
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Desk Group</div>
+                    <select class="panel-select">
+                        <option value="">Select Group</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="sales">Sales</option>
+                        <option value="marketing">Marketing</option>
+                    </select>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Desk Zone</div>
+                    <select class="panel-select">
+                        <option value="">Select Zone</option>
+                        <option value="quiet">Quiet Zone</option>
+                        <option value="collaborative">Collaborative Zone</option>
+                        <option value="window">Window Zone</option>
+                    </select>
+                </div>
+             
+                           <div class="section-divider"></div>
+
+            <div class="panel-field-inline">
+                <div class="panel-label">Desk Tags</div>
+                <div class="clear-all">Clear All Tags</div>
             </div>
+                <div class="tags-container">
+                    <span class="tag">Wow <span class="tag-close">×</span></span>
+                    <span class="tag">Too Hot<span class="tag-close">×</span></span>
+                    <span class="tag">Five Screens<span class="tag-close">×</span></span>
+                    <span class="tag">Burst Water Main<span class="tag-close">×</span></span>
+                </div>
+
+        <div class="section-divider"></div>
+
+            <div class="deskaction-container">
+                <div class="deskaction"><img src="images/lighticon.png">Test Light</div>
+                <div class="deskaction"><img src="images/speakericon.png">Test Speaker</div>
+                <div class="deskaction"><img src="images/cleanicon.png">Mark Clean</div>
+            </div>
+
+        <div class="section-divider"></div> 
+
+                    <div class="panel-field-inline">
+                <div class="panel-label">Set Desk Status</div>
+                    <div class="two-state-button">
+                        <button class="state-btn state-off" onclick="setActive(this)">Off</button>
+                        <button class="state-btn state-on active" onclick="setActive(this)">On</button>
+                    </div>
+            </div>
+
         </div>
+        
+        <!-- Bulk edit content -->
+        <div id="bulkEditContent" style="display: none;">
+                <div class="panel-field">
+                    <div class="panel-label">Desk Type</div>
+                    <select class="panel-select">
+                        <option value="">Select Type</option>
+                        <option value="standard">Standard</option>
+                        <option value="standing">Standing</option>
+                        <option value="executive">Executive</option>
+                    </select>   
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Desk Group</div>
+                    <select class="panel-select">
+                        <option value="">Select Group</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="sales">Sales</option>
+                        <option value="marketing">Marketing</option>
+                    </select>
+                </div>
+                <div class="panel-field">
+                    <div class="panel-label">Desk Zone</div>
+                    <select class="panel-select">
+                        <option value="">Select Zone</option>
+                        <option value="quiet">Quiet Zone</option>
+                        <option value="collaborative">Collaborative Zone</option>
+                        <option value="window">Window Zone</option>
+                    </select>
+                </div>
+
+            <div class="section-divider"></div>
+
+            <div class="panel-field-inline">
+                <div class="panel-label">Wireless Charging</div>
+                    <div class="three-state-button">
+                        <button class="state-btn state-off" onclick="setActive(this)">Off</button>
+                        <button class="state-btn" onclick="setActive(this)">Auto</button>
+                        <button class="state-btn state-on active" onclick="setActive(this)">On</button>
+                    </div>
+            </div>
+
+            <div class="panel-field-inline">
+                <div class="panel-label">Power Control</div>
+                    <div class="three-state-button">
+                        <button class="state-btn state-off active" onclick="setActive(this)">Off</button>
+                        <button class="state-btn" onclick="setActive(this)">Auto</button>
+                        <button class="state-btn state-on" onclick="setActive(this)">On</button>
+                    </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="panel-field-inline">
+                <div class="panel-label">Desk Tags</div>
+                <div class="clear-all">Clear All Tags</div>
+            </div>
+                <div class="tags-container">
+                    <span class="tag">Chair Toilet <span class="tag-close">×</span></span>
+                    <span class="tag">Sunny <span class="tag-close">×</span></span>
+                    <span class="tag">Dual Screen <span class="tag-close">×</span></span>
+                    <span class="tag">Fragrance <span class="tag-close">×</span></span>
+                </div>
+
+            <div class="section-divider"></div>
+
+            <div class="panel-field-inline">
+                <div class="panel-label">Set Desk Status</div>
+                    <div class="two-state-button">
+                        <button class="state-btn state-off" onclick="setActive(this)">Off</button>
+                        <button class="state-btn state-on active" onclick="setActive(this)">On</button>
+                    </div>
+            </div>
+</div>
+        </div>
+    </div>
+</div>
     </div>
 
     <script>
@@ -885,6 +1159,13 @@
             }
         });
 
+        // Clear selection
+document.getElementById('clearSelection').addEventListener('click', function() {
+    selectedDots = [];
+    updateSelection();
+    sidePanel.classList.remove('open');
+});
+
         // Color widget click handlers
         document.getElementById('selectConfirmed').addEventListener('click', function(e) {
             const confirmedDots = dots.filter(dot => dot.dataset.status === 'confirmed');
@@ -1070,41 +1351,18 @@
 function showPanel(theme) {
     sidePanel.className = 'side-panel open ' + theme + '-theme';
     
-    if (theme === 'white') {
-        panelTitle.innerHTML = 'Desk Selected';
-        panelContent.innerHTML = '<p>Single desk selected. Details would appear here.</p>';
-    } else {
-        panelTitle.innerHTML = 'Bulk Edit Desks<span class="panel-count">Selected Desks: ' + selectedDots.length + '</span>';
-        panelContent.innerHTML = `
-            <div class="panel-field">
-                <div class="panel-label">Desk Type</div>
-                <select class="panel-select">
-                    <option value="">Select Type</option>
-                    <option value="standard">Standard</option>
-                    <option value="standing">Standing</option>
-                    <option value="executive">Executive</option>
-                </select>
-            </div>
-            <div class="panel-field">
-                <div class="panel-label">Desk Group</div>
-                <select class="panel-select">
-                    <option value="">Select Group</option>
-                    <option value="engineering">Engineering</option>
-                    <option value="sales">Sales</option>
-                    <option value="marketing">Marketing</option>
-                </select>
-            </div>
-            <div class="panel-field">
-                <div class="panel-label">Desk Zone</div>
-                <select class="panel-select">
-                    <option value="">Select Zone</option>
-                    <option value="quiet">Quiet Zone</option>
-                    <option value="collaborative">Collaborative Zone</option>
-                    <option value="window">Window Zone</option>
-                </select>
-            </div>
-        `;
-    }
+    const singleContent = document.getElementById('singleDeskContent');
+const bulkContent = document.getElementById('bulkEditContent');
+
+if (theme === 'white') {
+    panelTitle.innerHTML = 'L4.102 <img src="images/eventicon.png" style="cursor:pointer">';
+    singleContent.style.display = 'block';
+    bulkContent.style.display = 'none';
+} else {
+    panelTitle.innerHTML = 'Bulk Edit Desks<span class="panel-count">Selected Desks: <span style="font-weight:600">' + selectedDots.length + '</span></span>';
+    singleContent.style.display = 'none';
+    bulkContent.style.display = 'block';
+}
 }
 
 
@@ -1124,5 +1382,23 @@ function showPanel(theme) {
             this.previousElementSibling.textContent = formatted;
         });
     </script>
+
+<!-- Tri/Duo Button Script -->
+
+    <script>
+        function setActive(btn) {
+            // Get siblings within the same parent
+            const siblings = btn.parentElement.children;
+            
+            // Remove active from all siblings
+            for (let sibling of siblings) {
+                sibling.classList.remove('active');
+            }
+            
+            // Add active to clicked button
+            btn.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
