@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Floorsense Admin Portal</title>
+    <title>Users – Floorsense Admin Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     
@@ -12,7 +12,7 @@
     <div class="top-bar">
         <img src="images/fslogosmallwhite.png" alt="Logo" class="logo">
         <nav class="menu">
-            <a href="#" class="menu-item">
+            <a href="index.html" class="menu-item">
                 <img src="images/mapicon.png" alt="" class="menu-icon">
                 <span>Floorplans</span>
                     <div class="tooltip tooltip-down">Floorplans</div>
@@ -48,90 +48,33 @@
     <div class="secondary-bar">
         <div class="filter-item">
             <img src="images/searchicon.png" alt="" class="filter-icon">
-            <input type="text" class="search-input" placeholder="Search People or Spaces">
+            <input type="text" class="search-input" style="width:235px" placeholder="Search by Username or Card Number">
         </div>
         
-        <div class="filter-item">
-            <img src="images/locationicon.png" alt="" class="filter-icon">
-            <select id="building-select">
-                <option value="" disabled selected hidden>Select Building</option>
-                <option value="north">North Tower</option>
-                <option value="south">South Tower</option>
-                <option value="east">East Building</option>
-                <option value="west">West Campus</option>
-            </select>
-            <span class="select-text">Select Building</span>
+        <div class="secondaryaction">
+            <img src="images/addusericon.png" alt="" class="filter-icon">
+            Add New User
         </div>
-        
-        <div class="filter-item">
-            <img src="images/updownicon.png" alt="" class="filter-icon">
-            <select id="floor-select">
-                <option value="" disabled selected hidden>Select Floor</option>
-                <option value="1">Floor 1</option>
-                <option value="2">Floor 2</option>
-                <option value="3">Floor 3</option>
-                <option value="4">Floor 4</option>
-                <option value="5">Floor 5</option>
-            </select>
-            <span class="select-text">Select Floor</span>
+
+        <div class="secondaryaction">
+            <img src="images/createvouchericon.png" alt="" class="filter-icon">
+            Create Visitor Pass
         </div>
-        
-        <div class="filter-item" onclick="document.getElementById('date-select').showPicker()">
-            <img src="images/calendarsimpleicon.png" alt="" class="filter-icon">
-            <span class="date-text">Dec 17, 2025</span>
-            <input type="date" id="date-select" value="2025-12-17">
-        </div>
+
     </div>
     
-    <div class="content" id="content">
-        <div class="map-container" id="mapContainer">
-            <div class="map-layer map-base"></div>
-            <div class="map-layer map-numbers" id="deskNumbers"></div>
-            <div class="dots-layer" id="dotsLayer"></div>
-        </div>
+        <div class="content" id="content">
+            <div class="map-container" id="mapContainer">
 
-
-
-<!-- Widgets to control / filter map visual stuff -->
-
-            <div class="map-widgets">
-
-    <!-- Color selection widget -->
-
-                <div class="widget widget-color">
-                    <div class="color-segment color-red" id="selectConfirmed">
-                        <div class="tooltip tooltip-right">Select Confirmed Desks</div>
-                    </div>
-                    <div class="color-segment color-yellow" id="selectReserved">
-                        <div class="tooltip tooltip-right">Select Reserved Desks</div>
-                    </div>
-                    <div class="color-segment color-green" id="selectFree">
-                        <div class="tooltip tooltip-right">Select Free Desks</div>
-                    </div>
-                </div>
-
-    <!-- Three-button widget - show numbers, invert / deselect -->
-                <div class="widget widget-tri">
-                    <div class="widget-third" id="toggleNumbers">
-                        <img src="images/mapstackicon.png" alt="" class="widget-icon">
-                        <div class="tooltip tooltip-right">Show Desk Numbers</div>
-                    </div>
-                    <div class="widget-third" id="invertSelection">
-                        <img src="images/selectinverseicon.png" alt="" class="widget-icon">
-                        <div class="tooltip tooltip-right">Invert Selection</div>
-                    </div>
-                    <div class="widget-third" id="clearSelection">
-                        <img src="images/clearselectionicon.png" alt="" class="widget-icon">
-                        <div class="tooltip tooltip-right">Clear Selection</div>
-                    </div>
-                </div>
             </div>
 
-<!-- Info Panel (Appears when desk/s are selected - diff layout for single/multiple) -->
+
+<!-- Info Panel (Appears when user is selected) -->
 
 <div class="side-panel" id="sidePanel">
 
  <div class="panel-title">
+
         <div style="display: flex; align-items: center; gap: 8px;">
             <span id="panelTitleText"></span>
             <div id="panelMoreInfoIcon" style="position: relative; display: none;">
@@ -139,6 +82,7 @@
                 <div class="tooltip tooltip-right">More Info</div>
             </div>
         </div>
+
         <div id="panelTitleIcon" style="position: relative; display: none;">
             <img src="images/eventicon.png" style="cursor:pointer; width: 20px; height: 20px;">
             <div class="tooltip tooltip-left">Event Log</div>
